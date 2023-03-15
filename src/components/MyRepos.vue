@@ -2,8 +2,8 @@
   <div class="hello">
     <header>
       <h1>GitHub Explorer</h1>
-      <label for="user">Explore exciting projects of awesome developrs from around the world</label>
-      <input type="text" placeholder="Enter a " id="user" v-model="user" name="user"
+      <label for="user" class="infoclass">See exciting projects from awesome developers around the world</label>
+      <input type="text" placeholder="Enter a Username" id="user" v-model="user" name="user"
         v-on:keydown.enter.prevent="getRepos(user)" />
       <button @click='getRepos(user)'>New Search</button>
     </header>
@@ -108,34 +108,36 @@ export default {
 </script>
   
 <style scoped>
+@import "@/assets/fonts/font.css";
 .hello {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  /* color: #2c3e50; */
-  color: white;
+  color: rgba(7, 27, 82, 1.0);
+  background: linear-gradient(to left, rgba(7, 27, 82, 1.0) 0%, rgba(0, 128, 128, 1.0) 100%);
   /* background: linear-gradient(to left, rgba(7, 27, 82, 1.0) 0%, rgba(0, 128, 128, 1.0) 100%); */
-  background-color: burlywood;
 }
 
 header {
   margin: 0rem auto 2rem auto;
+  background-color: orangered;
   /* background-image: linear-gradient(to bottom right, var(--main-color), var(--main-color), #fff, #fff, #fff) */
-  background-color: brown;
 }
-
+.infoclass {
+  color: whitesmoke;
+}
 header label {
   display: flex;
   flex-direction: column;
-  width: 35vw;
+  width: 38vw;
   margin: 1rem auto 0.5rem;
 }
 
 header input, header button {
   line-height: 1.5rem;
   padding: 0.5rem;
-  border: 1px solid var(--main-color);
+  border: 1px solid black;
 }
 
 header input {
@@ -144,9 +146,9 @@ header input {
 
 header button {
   border-radius: 0rem 0.3rem 0.3rem 0rem;
-  background-color: var(--main-color);
+  background-color: brown;
   border-top: 0px;
-  border-bottom: 2px solid var(--main-color);
+  border-bottom: 2px solid black;
   color: #fff;
 }
 
@@ -167,9 +169,9 @@ main {
 }
 
 button {
-  border: 1px solid var(--main-color);
+  border: 1px solid yellow;
   background-color: #fff;
-  color: var(--main-color);
+  color: black;
   padding: .5em 1em;
   border-radius: 0.7em;
   font-size: 1em;
@@ -189,7 +191,7 @@ h1 {
 }
 
 h2, h3 {
-  color: var(--main-color);
+  color: Black;
 }
 
 h2 {
