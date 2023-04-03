@@ -1,56 +1,39 @@
 <template>
-    <article class="card" @click="$emit('selected', repoName)">
-      <h2>{{ repoName }}</h2>
-      <p>{{ repoDescription }}</p>
-      <p>{{ language }}</p>
-      <!-- <span><font-awesome-icon icon="fa-solid fa-star" /> {{ starCount }}</span><span> <font-awesome-icon icon="fa-solid fa-code-fork" /> {{ forkCount }}</span> -->
-      <p>Created: {{ formattedDate }}</p>
-    </article>
+    <div class="card-container">
+        <div v-for="(repo, index) in repos" :key="index" class="card">
+            <h5>{{ repo.name }}</h5>
+        </div>
+    </div>
 </template>
-  
+
 <script>
 export default {
     name: 'RepoCard',
     props: {
-        repoName: String,
-        repoDescription: String,
-        language: String,
-        starCount: Number,
-        forkCount: Number,
-        dateCreated: String,
-    },
-    computed: {
-        formattedDate() {
-        const options = { year: "numeric", month: "long", day: "numeric" };
-        return new Date(this.dateCreated).toLocaleDateString(undefined, options);
-        },
-    },
+        repos: {
+            type: Object,
+            required: true
+        }
+    }
 }
 </script>
-  
+
 <style scoped>
-.card {
-    border: 1px solid #8E0000;
-    background-color: #005666;
-    cursor: pointer;
-    overflow: auto;
-    border-radius: 8px;
-    box-shadow: 0 0 20px 1px #8e0000;
-    text-align: left;
-    padding: 1rem;
-    color: white;
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /* background-color: #dbc300; */
 }
 
-h2 {
-    font-size: 1.5em;
-    color: black;
-}
-p:first-of-type, p:last-of-type {
-    font-weight: bold;
-    overflow-wrap: break-word;
-}
-span {
-    display: inline-block;
-    margin-right: 2em;
+.card {
+    background-color: #C89D7C;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2px 2px #ccc;
+    margin: 10px;
+    padding: 10px;
+    min-width: 300px;
+    color: navy;
 }
 </style>

@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
 // import NotFound from "@/components/NotFound.vue";
-import MyRepos from "@/components/MyRepos.vue";
-import HomePage from "@/components/HomePage.vue";
+import SearchUserPage from "@/components/SearchUserPage.vue";
+import HeroPage from "@/components/HeroPage.vue";
 
 
 const routes = [
   {
     path: "/",
-    component: HomePage,
+    component: HeroPage,
   },
   {
-    path: "/myrepos",
-    component: MyRepos,
+    path: "/searchuserpage",
+    component: SearchUserPage,
   },
   // {
   //   path: "/:catchAll(.*)",
