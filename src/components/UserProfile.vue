@@ -1,56 +1,53 @@
 <template>
-    <div class="card">
-        <div class="bar">
+    <div class="profile-card">
+        <div class="profile-bar">
             <div class="avatar" :style="{ backgroundImage: `url(${imageUrl})` }"></div>
             <div class="info-bar">
-                <div class="info">Full Name: <span class="value">{{ user.fullName }}</span></div>
-                <div class="info">Total Repositories: <span class="value">{{ user.totalRepos }}</span></div>
-                <div class="info">Followers: <span class="value">{{ user.followers }}</span></div>
-                <div class="info">Following: <span class="value">{{ user.following }}</span></div>
-                <!-- <div class="info">Company: <span class="value">{{ user.company }}</span></div> -->
+                <div class="info">Full Name: <span class="value">{{ userprofile.fullName }}</span></div>
+                <div class="info">Total Repositories: <span class="value">{{ userprofile.totalRepos }}</span></div>
+                <div class="info">Followers: <span class="value">{{ userprofile.followers }}</span></div>
+                <div class="info">Following: <span class="value">{{ userprofile.following }}</span></div>
                 <div class="info">Date Joined: <span class="value">{{ formattedDate }}</span></div>
             </div>
         </div>
-        <div class="results">
-            <repo-card :repos="repositories"></repo-card>
-        </div>
+        <div class="repositories-list"><repositories-list :repositorieslist="repositoriesinfo"></repositories-list></div>
     </div>
 </template>
   
 <script>
-import RepoCard from '@/components/RepoCard.vue';
+import RepositoriesList from '@/components/RepositoriesList.vue';
 
 export default {
-    name: 'UserResult',
+    name: 'UserProfile',
     props: {
-        user: {
+        userprofile: {
             type: Object,
             required: true,
         },
-        repositories: {
+        repositoriesinfo: {
             type: Array,
             required: true,
         }
     },
     data() {
         return {
-            imageUrl: this.user.avatar
+            imageUrl: this.userprofile.avatar
         }
     },
     components: {
-        RepoCard,
+        RepositoriesList,
     },
     computed: {
         formattedDate() {
             const options = { year: "numeric", month: "long", day: "numeric" };
-            return new Date(this.user.dateJoined).toLocaleDateString(undefined, options);
+            return new Date(this.userprofile.dateJoined).toLocaleDateString(undefined, options);
         }
     }
 }
 </script>
   
 <style scoped>
-.card {
+.profile-card {
     background-color: #DC4D01;
     display: flex;
     flex-direction: column;
@@ -60,7 +57,7 @@ export default {
     margin: 6.5px;
 }
 
-.bar {
+.profile-bar {
     background-color: #00ADF2;
     height: 21%;
     width: 100%;
@@ -85,9 +82,6 @@ export default {
     margin-left: 1rem;
     height: 100%;
     width: 80%;
-    /* background-color: #dbc300; */
-    /* background-color: #00bfff; */
-    /* background-color: #7BD9F6; */
     background-color: #00ADF2;
 }
 
@@ -101,7 +95,7 @@ export default {
     font-weight: bold;
 }
 
-.results {
+.repositories-list {
     height: 79%;
     display: flex;
     justify-content: center;

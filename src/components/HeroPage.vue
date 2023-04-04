@@ -173,7 +173,7 @@ const particlesOptions = {
     <div class="card">
       <h1 class="home__title">GitHub Explorer</h1>
       <p class="home__description">Explore amazing projects from developers around the world!</p>
-      <router-link to="/searchuserpage" class="home__button">Get Started</router-link>
+      <router-link to="/searchusers" class="home__button">Get Started</router-link>
     </div>
   </div>
 </template>

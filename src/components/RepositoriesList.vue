@@ -1,17 +1,15 @@
 <template>
     <div class="card-container">
-        <div v-for="(repo, index) in repos" :key="index" class="card">
-            <h5>{{ repo.name }}</h5>
-        </div>
-    </div>
+        <div v-for="(repository, index) in repositorieslist" :key="index" class="card"><h5>{{ repository.name }}</h5></div>
+    </div>  
 </template>
 
 <script>
 export default {
-    name: 'RepoCard',
+    name: 'RepositoriesList',
     props: {
-        repos: {
-            type: Object,
+        repositorieslist: {
+            type: Array,
             required: true
         }
     }
@@ -23,7 +21,6 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    /* background-color: #dbc300; */
 }
 
 .card {
@@ -33,7 +30,13 @@ export default {
     box-shadow: 2px 2px #ccc;
     margin: 10px;
     padding: 10px;
-    min-width: 300px;
+    width: 300px;
     color: navy;
+}
+
+.card :hover{
+    cursor: default;
+    transform: scale(1.2);
+    transition: all 5ms;
 }
 </style>

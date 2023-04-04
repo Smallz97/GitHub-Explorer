@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-// import NotFound from "@/components/NotFound.vue";
-import SearchUserPage from "@/components/SearchUserPage.vue";
+import NotFound from "@/components/NotFound.vue";
 import HeroPage from "@/components/HeroPage.vue";
+import SearchUsers from "@/components/SearchUsers.vue";
+import ViewRepository from "@/components/ViewRepository"
 
 
 const routes = [
@@ -10,14 +11,21 @@ const routes = [
     component: HeroPage,
   },
   {
-    path: "/searchuserpage",
-    component: SearchUserPage,
+    path: "/searchusers",
+    component: SearchUsers,
+    children: [
+      {
+        path: "viewrepository",
+        component: ViewRepository,
+        props: (route) => ({ repository: route.params.repository }),
+      },
+    ]
   },
-  // {
-  //   path: "/:catchAll(.*)",
-  //   name: "NotFound",
-  //   component: NotFound,
-  // },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: NotFound,
+  },
 ];
 
 const router = createRouter({

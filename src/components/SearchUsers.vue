@@ -1,19 +1,16 @@
 <template>
   <div class="head">
     <header>
-      <h1 class="pagetitle">GitHub Explorer</h1>
-      <label for="user" class="label">See exciting projects from awesome developers around the world</label>
-      <input type="text" placeholder="Enter a Username" id="user" v-model="user" name="user" v-on:keydown.enter.prevent="getRepos(user)" class="searchbar"/>
-      <button @click='getUserDetailsAndRepositories(user)' class="searchbutton">New Search</button>
+      <h1 class="pagetitle">GitHub Profile Explorer</h1>
+      <label for="username" class="label">See exciting projects from awesome developers around the world</label>
+      <input type="text" placeholder="Enter a Username" id="user" v-model="username" name="username"
+        v-on:keydown.enter.prevent="getUserDetailsAndRepositories(username)" class="searchbar" />
+      <button @click='getUserDetailsAndRepositories(username)' class="searchbutton">New Search</button>
     </header>
     <main>
       <search-user-placeholder v-if="userLoaded === 'none'"></search-user-placeholder>
       <loading-component v-if="userLoaded === 'loading'"></loading-component>
-      <user-result 
-        v-if="userLoaded ==='loaded'"
-        :user="fetchedUser"
-        :repositories="repositoriesInfo"
-      ></user-result>
+      <user-profile v-if="userLoaded === 'loaded'" :userprofile="searchedUser" :repositoriesinfo="repositoriesInfo" :username="username"></user-profile>
     </main>
     <pagination-component class="pagination"></pagination-component>
   </div>
@@ -22,28 +19,27 @@
 <script>
 import LoadingComponent from '@/components/LoadingComponent.vue'
 import SearchUserPlaceholder from '@/components/SearchUserPlaceholder.vue'
-import UserResult from '@/components/UserResult.vue'
+import UserProfile from '@/components/UserProfile.vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'
 const baseGithubApi = 'https://api.github.com/users'
 const githubApiParams = 'repos?sort=created&direction=desc&per_page=12'
 
 export default {
-  name: 'SearchUserPage',
-  data() 
-  {
+  name: 'SearchUsers',
+  data() {
     return {
       userLoaded: 'none',
-      user: '',
-      fetchedUser: {},
+      username: '',
+      searchedUser: {},
       repositoriesInfo: [],
+      totalRepos: '',
       pageNumber: 1,
-      totalRepos: ''
     }
   },
   components: {
     LoadingComponent,
     SearchUserPlaceholder,
-    UserResult,
+    UserProfile,
     PaginationComponent,
   },
   computed: {
@@ -55,16 +51,16 @@ export default {
       return Math.ceil(this.totalRepos / this.reposPerPage);
     }
   },
-  methods: {   
-    getUserDetailsAndRepositories: async function(user) {
-      if (user.trim() === '') return;
+  methods: {
+    getUserDetailsAndRepositories: async function (username) {
+      if (username.trim() === '') return;
       this.userLoaded = 'loading';
 
       try {
-        const fetchUserData = await fetch(`${baseGithubApi}/${user}`);
+        const fetchUserData = await fetch(`${baseGithubApi}/${username}`);
         const userData = await fetchUserData.json();
 
-        const fetchRepositoriesData = await fetch(`${baseGithubApi}/${user}/${githubApiParams}&page=${this.pageNumber}`);
+        const fetchRepositoriesData = await fetch(`${baseGithubApi}/${username}/${githubApiParams}&page=${this.pageNumber}`);
         const repositoriesData = await fetchRepositoriesData.json();
 
         // Extracting the user details
@@ -75,9 +71,9 @@ export default {
           followers: userData.followers,
           following: userData.following,
           totalRepos: userData.public_repos,
-          // company: userData.company,
+          company: userData.company,
           dateJoined: userData.created_at,
-          // gitHubProfileUrl: userDetails.html_url,
+          gitHubProfileUrl: userData.html_url,
         }
         // Extracting the details for each repository and storing the value in an array.
         const repositoriesInfo = repositoriesData.map((repository) => ({
@@ -88,14 +84,15 @@ export default {
           forkCount: repository.forks_count,
           dateCreated: repository.created_at,
           dateUpdated: repository.updated_at,
+          id: repository.id,
           url: repository.html_url
         }));
 
         // Updating the component's data properties with the fetched data
-        this.user = user;
-        this.totalRepos = userDetails.totalRepos;
-        this.fetchedUser = userDetails;
+        this.username = username;
+        this.searchedUser = userDetails;
         this.repositoriesInfo = repositoriesInfo;
+        this.totalRepos = userDetails.totalRepos;
         this.userLoaded = 'loaded';
 
       } catch (error) {
@@ -136,7 +133,8 @@ header .label {
   color: darkorange;
 }
 
-header input, header button {
+header input,
+header button {
   line-height: 1.5rem;
   padding: 0.3rem;
   border: 1px solid black;
@@ -148,7 +146,7 @@ header input, header button {
 }
 
 .searchbar:focus {
-  font-size: 1.02em;   
+  font-size: 1.02em;
 }
 
 .searchbutton {

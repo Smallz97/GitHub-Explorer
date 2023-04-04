@@ -21,7 +21,7 @@ export default {
 }
 
 .message {
-  color: white;
+  color: black;
   font-size: large;
 }
 </style>
