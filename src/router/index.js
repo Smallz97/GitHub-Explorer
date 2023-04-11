@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import NotFound from "@/components/NotFound.vue";
-import HeroPage from "@/components/HeroPage.vue";
-import SearchUsers from "@/components/SearchUsers.vue";
-import ViewRepository from "@/components/ViewRepository"
+import NotFound from "@/routes/NotFound.vue";
+import HeroPage from "@/routes/HeroPage.vue";
+import SearchUsers from "@/routes/SearchUsers.vue";
+import ViewRepository from "@/routes/ViewRepository"
 
 
 const routes = [

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'SearchUserPlaceholder'
+  name: 'SearchUserMessage'
 }
 </script>
 

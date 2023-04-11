@@ -8,9 +8,9 @@
       <button @click='getUserDetailsAndRepositories(username)' class="searchbutton">New Search</button>
     </header>
     <main>
-      <search-user-placeholder v-if="userLoaded === 'none'"></search-user-placeholder>
+      <search-user-message v-if="userLoaded === 'none'"></search-user-message>
       <loading-component v-if="userLoaded === 'loading'"></loading-component>
-      <user-profile v-if="userLoaded === 'loaded'" :userprofile="searchedUser" :repositoriesinfo="repositoriesInfo" :username="username"></user-profile>
+      <user-profile v-if="userLoaded === 'loaded'" :userprofile="userProfile" :repositoriesinfo="repositoriesInfo" :username="username" :pagenumber="pageNumber"></user-profile>
     </main>
     <pagination-component class="pagination"></pagination-component>
   </div>
@@ -18,7 +18,7 @@
   
 <script>
 import LoadingComponent from '@/components/LoadingComponent.vue'
-import SearchUserPlaceholder from '@/components/SearchUserPlaceholder.vue'
+import SearchUserMessage from '@/components/SearchUserMessage.vue'
 import UserProfile from '@/components/UserProfile.vue'
 import PaginationComponent from '@/components/PaginationComponent.vue'
 const baseGithubApi = 'https://api.github.com/users'
@@ -30,7 +30,7 @@ export default {
     return {
       userLoaded: 'none',
       username: '',
-      searchedUser: {},
+      userProfile: {},
       repositoriesInfo: [],
       totalRepos: '',
       pageNumber: 1,
@@ -38,7 +38,7 @@ export default {
   },
   components: {
     LoadingComponent,
-    SearchUserPlaceholder,
+    SearchUserMessage,
     UserProfile,
     PaginationComponent,
   },
@@ -63,7 +63,7 @@ export default {
         const fetchRepositoriesData = await fetch(`${baseGithubApi}/${username}/${githubApiParams}&page=${this.pageNumber}`);
         const repositoriesData = await fetchRepositoriesData.json();
 
-        // Extracting the user details
+        // Extracting the user's details
         const userDetails = {
           avatar: userData.avatar_url,
           fullName: userData.name,
@@ -75,7 +75,7 @@ export default {
           dateJoined: userData.created_at,
           gitHubProfileUrl: userData.html_url,
         }
-        // Extracting the details for each repository and storing the value in an array.
+        // Extracting the details of each repository and storing the value in an array.
         const repositoriesInfo = repositoriesData.map((repository) => ({
           name: repository.name,
           language: repository.language,
@@ -90,7 +90,7 @@ export default {
 
         // Updating the component's data properties with the fetched data
         this.username = username;
-        this.searchedUser = userDetails;
+        this.userProfile = userDetails;
         this.repositoriesInfo = repositoriesInfo;
         this.totalRepos = userDetails.totalRepos;
         this.userLoaded = 'loaded';

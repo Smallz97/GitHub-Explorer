@@ -10,7 +10,7 @@
                 <div class="info">Date Joined: <span class="value">{{ formattedDate }}</span></div>
             </div>
         </div>
-        <div class="repositories-list"><repositories-list :repositorieslist="repositoriesinfo"></repositories-list></div>
+        <div class="repositories-list"><repositories-list :repositorieslist="repositoriesinfo" :username="username" :pagenumber="pagenumber"></repositories-list></div>
     </div>
 </template>
   
@@ -27,6 +27,14 @@ export default {
         repositoriesinfo: {
             type: Array,
             required: true,
+        },
+        username: {
+            type: String,
+            required: true,
+        },
+        pagenumber: {
+            type: Number,
+            required: true
         }
     },
     data() {
@@ -82,7 +90,6 @@ export default {
     margin-left: 1rem;
     height: 100%;
     width: 80%;
-    background-color: #00ADF2;
 }
 
 .info {
